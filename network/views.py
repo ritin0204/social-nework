@@ -18,7 +18,7 @@ def index(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, "network/index.html", {
-        "allpost": page_obj
+        "allpost": allposts
      })
 
 
@@ -143,10 +143,10 @@ def profile(request,user):
             usr_data =Follow()
             usr_data.c_user = userdata
             usr_data.save()
-        if request.user.id in usr_data["followers"]:
-            message = 1
-        elif usr_data["followers"] is None:
+        if usr_data["followers"] is None:
             message=0
+        elif request.user.id in usr_data["followers"]:
+            message = 1
         elif request.user == userdata:
             message =2
         else:
